@@ -1,6 +1,13 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 
+/**
+ * Renders a table displaying file details.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array} props.fileData - The array of file data to be displayed.
+ * @returns {JSX.Element} The rendered table component.
+ */
 const FileDetail = ({ fileData }) => {
   return (
     <Table striped bordered hover responsive variant="dark" className="mt-3">

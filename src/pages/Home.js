@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Container,
   Row,
@@ -7,46 +8,39 @@ import {
   NavbarBrand,
   FormControl,
   Alert,
+  Spinner,
 } from "react-bootstrap";
+
 import FileList from "../components/FileList";
 import FileDetail from "../components/FileDetail";
-import { fetchFiles, fetchFileData } from "../services/api";
+import {
+  getFiles,
+  getFileData,
+  setSelectedFile,
+  setError,
+  setFileData,
+} from "../actions/filesActions";
 
 const Home = () => {
-  const [files, setFiles] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [fileData, setFileData] = useState([]);
-  const [searchFile, setSearchFile] = useState("");
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const { files, selectedFile, fileData, error, loading } = useSelector(
+    (state) => state.files
+  );
 
   useEffect(() => {
-    const getFiles = async () => {
-      try {
-        const files = await fetchFiles();
-        setFiles(files);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getFiles();
-  }, []);
+    dispatch(getFiles(""));
+  }, [dispatch]);
 
   const handleFileClick = async (fileName) => {
-    setSelectedFile(fileName);
-    setError(null);
-    try {
-      const data = await fetchFileData(fileName);
-      setFileData(data.lines);
-    } catch (error) {
-      setFileData([]);
-      setError(error.message);
-      console.error(error);
-    }
+    dispatch(setSelectedFile(fileName));
+    dispatch(setFileData([]));
+    dispatch(getFileData(fileName));
   };
-  const filteredFiles = files.filter((file) =>
-    file.toLowerCase().includes(searchFile.toLowerCase())
-  );
+
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    dispatch(getFiles(searchTerm));
+  };
 
   return (
     <>
@@ -63,18 +57,19 @@ const Home = () => {
               type="text"
               placeholder="Search files"
               className="mb-3"
-              onChange={(e) => setSearchFile(e.target.value)}
+              onChange={handleSearch}
             />
-            {error && <Alert variant="danger">{error}</Alert>}
-            <FileList files={filteredFiles} onFileClick={handleFileClick} />
+            <FileList files={files} onFileClick={handleFileClick} />
           </Col>
           <Col md={8}>
             <h2>File Details</h2>
-            {selectedFile && <FileDetail fileData={fileData} />}
-            {selectedFile && fileData.length === 0 && (
-              <Alert variant="info">
-                No data available for the selected file.
-              </Alert>
+            {loading && <Spinner animation="border" role="status" />}
+            {error && <Alert variant="danger">{error}</Alert>}
+            {selectedFile && !error && !fileData.length && !loading && (
+              <Alert variant="warning">No data available for this file.</Alert>
+            )}
+            {selectedFile && !error && fileData.length > 0 && (
+              <FileDetail fileData={fileData} />
             )}
           </Col>
         </Row>
