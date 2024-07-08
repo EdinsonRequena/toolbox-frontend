@@ -26,15 +26,13 @@ export const setLoading = (loading) => ({
 });
 
 /**
- * Fetches files based on the provided search term.
- *
- * @param {string} searchTerm - The search term to filter the files.
- * @returns {Function} - A function that dispatches actions to update the state.
+ * Fetches files and updates the state with the retrieved files.
+ * @returns {Function} The async function that dispatches actions to update the state.
  */
-export const getFiles = (searchTerm) => async (dispatch) => {
+export const getFiles = () => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const files = await fetchFiles(searchTerm);
+    const files = await fetchFiles();
     dispatch(setFiles(files));
     dispatch(setError(null));
   } catch (error) {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Container,
@@ -26,6 +26,11 @@ const Home = () => {
   const { files, selectedFile, fileData, error, loading } = useSelector(
     (state) => state.files
   );
+  const [searchFile, setSearchFile] = useState("");
+  const onChange = (e) => setSearchFile(e.target.value);
+  const filteredFiles = files.filter((file) =>
+    file.toLowerCase().includes(searchFile.toLowerCase())
+  );
 
   useEffect(() => {
     dispatch(getFiles(""));
@@ -35,11 +40,6 @@ const Home = () => {
     dispatch(setSelectedFile(fileName));
     dispatch(setFileData([]));
     dispatch(getFileData(fileName));
-  };
-
-  const handleSearch = (e) => {
-    const searchTerm = e.target.value;
-    dispatch(getFiles(searchTerm));
   };
 
   return (
@@ -57,9 +57,9 @@ const Home = () => {
               type="text"
               placeholder="Search files"
               className="mb-3"
-              onChange={handleSearch}
+              onChange={onChange}
             />
-            <FileList files={files} onFileClick={handleFileClick} />
+            <FileList files={filteredFiles} onFileClick={handleFileClick} />
           </Col>
           <Col md={8}>
             <h2>File Details</h2>
