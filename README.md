@@ -21,7 +21,7 @@ Este proyecto es el frontend de la aplicación Toolbox, construida con React y R
 
 1. Clona el repositorio:
     ```bash
-    git clone <URL_DEL_REPOSITORIO>
+    git clone https://github.com/EdinsonRequena/toolbox-frontend.git
     cd toolbox-frontend
     ```
 
