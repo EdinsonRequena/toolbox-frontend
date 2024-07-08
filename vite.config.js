@@ -15,7 +15,9 @@ export default defineConfig({
     },
     react(),
   ],
-
+  build: {
+    outDir: "dist",
+  },
   optimizeDeps: {
     force: true,
     esbuildOptions: {
