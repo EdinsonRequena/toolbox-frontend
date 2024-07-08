@@ -39,17 +39,12 @@ Este proyecto es el frontend de la aplicación Toolbox, construida con React y R
 
 ## Ejecutar el Proyecto con Docker
 
-1. Construye la imagen de Docker:
+1. Corre el siguiente comando para construir y levantar los contenedores de Docker:
     ```bash
-    docker build -t toolbox-frontend .
+    docker-compose up --build
     ```
 
-2. Ejecuta el contenedor:
-    ```bash
-    docker run -p 8080:80 toolbox-frontend
-    ```
-
-3. Abre [http://localhost:8080](http://localhost:8080) en tu navegador.
+2. Abre [http://localhost:8080](http://localhost:8080) en tu navegador.
 
 ## Ejecutar los Tests
 
