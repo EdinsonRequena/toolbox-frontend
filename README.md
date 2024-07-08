@@ -1,8 +1,63 @@
-# React + Vite
+# Toolbox Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es el frontend de la aplicación Toolbox, construida con React y Redux.
 
-Currently, two official plugins are available:
+## Estructura del Proyecto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- `src/`: Contiene todo el código fuente del frontend.
+  - `actions/`: Define las acciones de Redux.
+  - `components/`: Contiene los componentes de la UI.
+  - `reducers/`: Define los reducers de Redux.
+  - `services/`: Contiene funciones para interactuar con la API.
+  - `store/`: Configura el store de Redux.
+  - `pages/`: Contiene las páginas de la aplicación.
+
+## Requisitos
+
+- Node.js 16
+- Docker (opcional)
+
+## Ejecutar el Proyecto sin Docker
+
+1. Clona el repositorio:
+    ```bash
+    git clone <URL_DEL_REPOSITORIO>
+    cd toolbox-frontend
+    ```
+
+2. Instala las dependencias:
+    ```bash
+    npm install
+    ```
+
+3. Inicia la aplicación:
+    ```bash
+    npm run start
+    ```
+
+4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+
+## Ejecutar el Proyecto con Docker
+
+1. Construye la imagen de Docker:
+    ```bash
+    docker build -t toolbox-frontend .
+    ```
+
+2. Ejecuta el contenedor:
+    ```bash
+    docker run -p 8080:80 toolbox-frontend
+    ```
+
+3. Abre [http://localhost:8080](http://localhost:8080) en tu navegador.
+
+## Ejecutar los Tests
+
+1. Corre los tests unitarios con Jest:
+    ```bash
+    npm test
+    ```
+
+## Notas
+
+- Asegúrate de tener el backend corriendo para que la aplicación frontend funcione correctamente.
